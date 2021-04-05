@@ -1,43 +1,59 @@
 #include "eOOPc.h"
 #include "class.h"
-
+#include <stdio.h>
 
 //PRIVATE DECLARAION
-
-typedef struct{
-
-	ePROP_DEC(int, prop1);
+	typedef struct{
 	
-	ePRIV_PROP_DEC_PRIV(int, prop2, get);
-
-	int (*method1)(void * eOBJ);
-
-} Class_t;
+		//matching public prop declaration
+			ePROP_DEC(int, prop1);
+		
+		//private property declaration + PUBLIC function pointer declarations
+			ePRIV_PROP_DEC_PRIV(int, prop2, get);
+	
+		//public method function pointer
+			int (*method1)(void);
+		
+		//private method function pointer
+			int (*method2)(void * eOBJ);
+	
+	} Class_t;
 
 //PRIVATE METHODS
-
-
-//PUBLIC METHODS TO OVERRIDE DECLARATIONS
-
-void Class_t_instantiate(void * eOBJ){
-
-	eSELF(Class_t);
-
-	ePROP_DEF(prop1, 3);
+	int Class_t_method2(void * eOBJ){
 	
-	ePRIV_PROP_DEF(Class_t, prop2, 4, get);
+		eSELF(Class_t);
+		
+		return self->prop1;
 	
-	self->method1 = &Class_t_method1;
+	}
 
-}
+//PUBLIC METHOD DEFINITIONS TO OVERRIDE DECLARATIONS
 
-ePRIV_PROP_FUNC_DEF(Class_t, int, prop2, get)
-
-int Class_t_method1(void * eOBJ){
-
-	eSELF(Class_t);
+	//private property PUBLIC get/set method definitions
+		ePRIV_PROP_FUNC_DEF(Class_t, int, prop2, get)
 	
-	return eGET(self, prop2);
+	//other public method definitions
+		int Class_t_method1(void){
+		
+			//eSELF(Class_t);
+			
+			return 4;
+		
+		}
 
-}
+	void Class_t_instantiate(void * eOBJ){
+	
+		eSELF(Class_t);
+		
+		ePROP_DEF(prop1, 3);
+		
+		ePRIV_PROP_DEF(Class_t, prop2, 4, get);
+		
+		self->method1 = &Class_t_method1;
+		self->method2 = &Class_t_method2;
+	
+	}
+	
+	
 

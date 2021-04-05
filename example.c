@@ -1,12 +1,17 @@
+#include <stdio.h>
 #include "eOOPc.h"
 #include "class.h"
 
 int main (void){
-		
+
 	//instantiate object (i.e. new)
 		eNEW(Class_t, object);
 		
-		int i = object->prop1;
+		int i = (*object->method1)();
+		
+		//printf("%d\n", i);
+		
+		//int j = eGET(object, prop2);
 		
 		//eGET(object, prop2);
 	
