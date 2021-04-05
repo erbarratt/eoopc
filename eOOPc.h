@@ -8,6 +8,22 @@
 	#ifndef P99_IF_H_
 		#include "p99/p99_if.h"
 	#endif
+
+	//interface definitions can contain expressly written variables,
+	//other e@ macros etc as needed.
+		#define eINTERFACE_interface() \
+			int poop; \
+			int shmoop
+
+	//grab an interface definition by calling it's macro.
+		#define eIMPLEMENTS(i) eINTERFACE_##i()
+
+	//add a parent class struct to gain access to it's public methods
+		#define eEXTENDS(p) struct p
+
+	//helper macro to denote that this parent is upcastable (this macro must be first element of containing
+	//struct for this to be true
+		#define eDIR_EXTENDS(p) eEXTENDS(p)
 	
 	/*
 	* Instantiate an object 'o*' of type 'c' by using function 'c_instatiate()'
