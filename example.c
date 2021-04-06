@@ -4,9 +4,9 @@
 int main (void){
 
 	//instantiate object (i.e. new)
-		eNEW(Class_t, object);
+		eNEW_NA(Class_t, object);
 		
-		int i = eMETH(object, method1);
+		int i = eMETH_NA(object, method1);
 		
 	return 0;
 

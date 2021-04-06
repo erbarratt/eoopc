@@ -4,10 +4,6 @@
 	#ifndef _STDLIB_H
 		#include <stdlib.h>
 	#endif
-	
-	#ifndef P99_IF_H_
-		#include "p99/p99_if.h"
-	#endif
 
 	/**
 	* grab an interface definition by calling it's macro.
@@ -36,7 +32,7 @@
 	* @param o Object variable name
 	* @param ... any further arguments
 	*/
-		#define eNEW_INS(c,o, ...) P99_IF_EMPTY(__VA_ARGS__) (c##_instantiate(o)) (c##_instantiate(o, __VA_ARGS__))
+		#define eNEW_INS(c,o, ...) c##_instantiate(o, __VA_ARGS__)
 	
 	/**
 	* Call allocation method and imediately fire instatiation function for heap object
@@ -45,6 +41,23 @@
 	* @param ... any further arguments
 	*/
 		#define eNEW(c,o, ...) struct c*o = (struct c *)malloc(sizeof(struct c)); eNEW_INS(c,o, __VA_ARGS__)
+	
+		/**
+	* Instantiate an object 'o*' of type 'c' by using function 'c_instatiate()', no arguments
+	* @param c Struct type
+	* @param o Object variable name
+	* @param ... any further arguments
+	*/
+		#define eNEW_INS_NA(c,o) c##_instantiate(o)
+	
+	/**
+	* Call allocation method and imediately fire instatiation function for heap object, no arguments
+	* @param c Struct type
+	* @param o Object variable name
+	* @param ... any further arguments
+	*/
+		#define eNEW_NA(c,o) struct c*o = (struct c *)malloc(sizeof(struct c)); eNEW_INS_NA(c,o)
+
 	
 	/**
 	* public property DECLARATION
@@ -144,7 +157,15 @@
 	* @param m The method
 	* @param ... Other args
 	*/
-		#define eMETH(o, m, ...) P99_IF_EMPTY(__VA_ARGS__) ((*o->m)(o)) ((*o->m)(o, __VA_ARGS__))
+		#define eMETH(o, m, ...) (*o->m)(o, __VA_ARGS__)
+	
+	/**
+	* Method call wrapper that passes object as first argument for use of eSELF(), no arguments
+	* @param o Object
+	* @param m The method
+	* @param ... Other args
+	*/
+		#define eMETH_NA(o, m) (*o->m)(o)
 		
 	/**
 	* Free memory on heap for object
