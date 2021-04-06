@@ -16,7 +16,8 @@
 	
 	struct Class_t{
 	
-		eDIR_EXTENDS(parent, parent);
+		//parent for upcasts
+			eDIR_EXTENDS(parent, parent);
 	
 		//interface
 			eIMPLEMENTS(interface);
