@@ -1,9 +1,16 @@
-#include "eOOPc.h"
-#include "class.h"
-#include <stdio.h>
+//need OOP macros
+	#include "eOOPc.h"
+
+//include public declaration
+	#include "class.h"
 
 //PRIVATE DECLARAION
 	typedef struct{
+	
+		eDIR_EXTENDS(parent, parent);
+	
+		//interface
+			eIMPLEMENTS(interface);
 	
 		//matching public prop declaration
 			ePROP_DEC(int, prop1);
@@ -12,7 +19,7 @@
 			ePRIV_PROP_DEC_PRIV(int, prop2, get);
 	
 		//public method function pointer
-			int (*method1)(void);
+			int (*method1)(void * eOBJ);
 		
 		//private method function pointer
 			int (*method2)(void * eOBJ);
@@ -34,9 +41,9 @@
 		ePRIV_PROP_FUNC_DEF(Class_t, int, prop2, get)
 	
 	//other public method definitions
-		int Class_t_method1(void){
+		int Class_t_method1(void * eOBJ){
 		
-			//eSELF(Class_t);
+			eSELF(Class_t);
 			
 			return 4;
 		

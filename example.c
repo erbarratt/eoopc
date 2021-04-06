@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "eOOPc.h"
 #include "class.h"
 
@@ -7,7 +6,7 @@ int main (void){
 	//instantiate object (i.e. new)
 		eNEW(Class_t, object);
 		
-		int i = (*object->method1)();
+		int i = eMETH(object, method1);
 		
 		//printf("%d\n", i);
 		
