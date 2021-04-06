@@ -32,16 +32,16 @@
 	
 	/**
 	* Instantiate an object 'o*' of type 'c' by using function 'c_instatiate()'
-	* @param <classtype_t> c
-	* @param var o Object variable name
+	* @param c Struct type
+	* @param o Object variable name
 	* @param ... any further arguments
 	*/
 		#define eNEW_INS(c,o, ...) P99_IF_EMPTY(__VA_ARGS__) (c##_instantiate(o)) (c##_instantiate(o, __VA_ARGS__))
 	
 	/**
 	* Call allocation method and imediately fire instatiation function for heap object
-	* @param <classtype_t> c
-	* @param var o Object variable name
+	* @param c Struct type
+	* @param o Object variable name
 	* @param ... any further arguments
 	*/
 		#define eNEW(c,o, ...) struct c*o = (struct c *)malloc(sizeof(struct c)); eNEW_INS(c,o, __VA_ARGS__)
@@ -117,15 +117,15 @@
 	
 	/**
 	* Cast "self" back into the class type
-	* @param <classtype_t> c
+	* @param c Struct type
 	*/
 		#define eSELF(c) c * self = (c*)eOBJ
 	
 	/**
 	* Get the value of a protected variable 'p' within object 'o'
 	* Prints to stderr if property is private
-	* @param var o Object
-	* @param var p Object property
+	* @param o Object
+	* @param p Object property
 	*/
 		#define eGET(o, p) o->get_##p(o)
 	
@@ -140,8 +140,8 @@
 	
 	/**
 	* Method call wrapper that passes object as first argument for use of eSELF()
-	* @param var o Object
-	* @param var m The method
+	* @param o Object
+	* @param m The method
 	* @param ... Other args
 	*/
 		#define eMETH(o, m, ...) P99_IF_EMPTY(__VA_ARGS__) ((*o->m)(o)) ((*o->m)(o, __VA_ARGS__))
@@ -155,8 +155,8 @@
 	/**
 	* Free memory on heap for object by calling defined function to allow further actions
 	* such as destroying string / struct members within object
-	* @param <classtype_t> c
-	* @param var o Object variable name
+	* @param c Struct type
+	* @param o Object variable name
 	*/
 		#define eDESTROY_M(c, o) c##_heap_destruct(o); o = ((void*)0)
 		
