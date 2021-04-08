@@ -49,14 +49,14 @@ In eOOPc style, we layout this code as follows:
 ```
     [other structure declarations]
     
-    struct <classname>_t {
+    struct &lt;classname&gt;_t {
         [public properties]
         [public method pointers]  
     };
     
     [Optional private/public typecast]
     
-    <classname>_t_instantiate(void * eOBJ);
+    classname_t_instantiate(void * eOBJ);
 ```
 
 For example, our person_pub.h file could be:
@@ -102,7 +102,7 @@ In eOOPc, the argument `void * eOBJ` is used at the first argument of any class 
 
 In other languages, `this` is done behind the scenes, but uses essentially the same logic. 
 
-Note it is required by any `<classname>_t_instatiate()` function for some eOOPC macros to work, and is present in the sole public `printName` method in the Person class.
+Note it is required by any `&lt;classname&gt;_t_instatiate()` function for some eOOPC macros to work, and is present in the sole public `printName` method in the Person class.
 
 Private declaration files
 -
@@ -112,14 +112,14 @@ The _class.h header file is used by the _class.c file of this class, or any clas
 Here we can declare a number of things:
 
 - A Virtual Method Table (vmt) for private methods
-- The private typecast of the <classname>_t structure to a type (also defining private members and method class pointers)
-- Declarations for the private methods that will get pointed <i>to</i>
+- The private typecast of the classname_t structure to a type (also defining private members and method class pointers)
+- Declarations for the private methods that will get pointed to
 
 In eOOPc style, we layout this code as follows:
 
 ```
 
-    #include "<classname>_pub.h"
+    #include "classname_pub.h"
     
     [optional vmt struct declaration]
     
@@ -130,14 +130,14 @@ In eOOPc style, we layout this code as follows:
         [public method pointers]
         [private properties]
         [private vmt pointer]
-    } <classname>_t;
+    } classname_t;
 
     [optional method function declarations]
 
 ```
 
 By having the `[optional method function declarations]` in this file, it stops any calling function from being able to call them directly. Instead
-an object of type <classname>_t must be instantiated, then the corresponding method pointer called.
+an object of type classname_t must be instantiated, then the corresponding method pointer called.
 
 Our Person's private declaration file could be:
 
