@@ -81,7 +81,7 @@ For example, our person_pub.h file could be:
                 
         };
         
-    Person_t_instantiate(void * eOBJ);
+    Person_t_instantiate(void * eOBJ, int height, int age, int weight, char * firstname, char * surname);
 
 #endif
 ```
