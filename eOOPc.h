@@ -12,19 +12,12 @@
 		#define eIMPLEMENTS(i) eINTERFACE_##i()
 
 	/**
-	* add a parent class struct to gain access to it's public methods
-	* @param p Struct name
-	* @param n Property name
-	*/
-		#define eEXTENDS(p,n) struct p n
-
-	/**
 	* helper macro to denote that this parent is upcastable (this macro must be first element of containing
 	* struct for this to be true)
-	* @param p Struct name
-	* @param n Property name
+	* @param c Class
+	* @param p Property name
 	*/
-		#define eDIR_EXTENDS(p,n) eEXTENDS(p, n)
+		#define eINHERITS(c,p) struct c p
 	
 	/**
 	* Instantiate an object 'o*' of type 'c' by using function 'c_instatiate()'
@@ -32,32 +25,15 @@
 	* @param o Object variable name
 	* @param ... any further arguments
 	*/
-		#define eNEW_INS(c,o, ...) c##_instantiate(o, __VA_ARGS__)
+		#define eCONSTRUCT(c, ...) c##_instantiate(__VA_ARGS__)
 	
 	/**
-	* Call allocation method and imediately fire instatiation function for heap object
+	* Call allocation method and imediately fire instantiation function for heap object
 	* @param c Struct type
 	* @param o Object variable name
 	* @param ... any further arguments
 	*/
-		#define eNEW(c,o, ...) struct c*o = (struct c *)malloc(sizeof(struct c)); eNEW_INS(c,o, __VA_ARGS__)
-	
-		/**
-	* Instantiate an object 'o*' of type 'c' by using function 'c_instatiate()', no arguments
-	* @param c Struct type
-	* @param o Object variable name
-	* @param ... any further arguments
-	*/
-		#define eNEW_INS_NA(c,o) c##_instantiate(o)
-	
-	/**
-	* Call allocation method and imediately fire instatiation function for heap object, no arguments
-	* @param c Struct type
-	* @param o Object variable name
-	* @param ... any further arguments
-	*/
-		#define eNEW_NA(c,o) struct c*o = (struct c *)malloc(sizeof(struct c)); eNEW_INS_NA(c,o)
-
+		#define eNEW(c) (struct c *)malloc(sizeof(struct c))
 	
 	/**
 	* public property DECLARATION
@@ -128,11 +104,21 @@
 		#define ePRIV_PROP_FUNC_DEF_getset(c, t, p) ePRIV_PROP_FUNC_DEF_get(c, t, p) ePRIV_PROP_FUNC_DEF_set(c, t, p)
 		#define ePRIV_PROP_FUNC_DEF(c, t, p, m) ePRIV_PROP_FUNC_DEF_##m(c, t, p)
 	
+	
+	
 	/**
 	* Cast "self" back into the class type
 	* @param c Struct type
 	*/
 		#define eSELF(c) c * self = (c*)eOBJ
+	
+	/**
+	* upCast "self" to parent struct type. Parent struct type must be first struct member publically
+	* Can only be called from scope where child object is instantiated
+	* @param c Struct type
+	* @param v Variable name to use
+	*/
+		#define ePARENT(c, v) struct c * v = (struct c *)self
 	
 	/**
 	* Get the value of a protected variable 'p' within object 'o'
@@ -157,7 +143,7 @@
 	* @param m The method
 	* @param ... Other args
 	*/
-		#define eMETH(o, m, ...) (*o->m)(o, __VA_ARGS__)
+		#define eCALL(o, m, ...) (*o->m)(o, __VA_ARGS__)
 	
 	/**
 	* Method call wrapper that passes object as first argument for use of eSELF(), no arguments
@@ -165,20 +151,12 @@
 	* @param m The method
 	* @param ... Other args
 	*/
-		#define eMETH_NA(o, m) (*o->m)(o)
+		#define eCALLna(o,m) (*o->m)(o)
 		
 	/**
 	* Free memory on heap for object
 	* @param var o Object variable name
 	*/
 		#define eDESTROY(o) free(o); o = ((void*)0)
-	
-	/**
-	* Free memory on heap for object by calling defined function to allow further actions
-	* such as destroying string / struct members within object
-	* @param c Struct type
-	* @param o Object variable name
-	*/
-		#define eDESTROY_M(c, o) c##_heap_destruct(o); o = ((void*)0)
 		
 #endif //OOP_MAIN_H
