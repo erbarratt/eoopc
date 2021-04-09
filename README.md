@@ -3,7 +3,7 @@ Small macro based OOP implementation for C
 
 ### Why OOP in base C?
 
-Because you can. Because some projects make more sense written using OOP concepts. Because pointers are awesome.
+Because you can. Because some projects make more sense written using OOP concepts. Because pointers are awesome. Because gotta go fast.
 
 ### Writing code in the eOOPc style
 This article assumes prior knowledge of OOP concepts such as encapsulation, inheritance, polymorphism, properties and methods. These will not be covered here.
