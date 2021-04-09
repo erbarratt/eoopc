@@ -43,10 +43,10 @@ Public declaration files should contain only:
 
 In eOOPc style, we layout this code as follows:
 
-```
+```c
     [other structure declarations]
     
-    struct &lt;classname&gt;_t {
+    struct classname_t {
         [public properties]
         [public method pointers]  
     };
@@ -58,7 +58,7 @@ In eOOPc style, we layout this code as follows:
 
 For example, our person_pub.h file could be:
 
-```
+```c
 #ifndef PERSON_PUBLIC_H
 #define PERSON_PUBLIC_H
 
@@ -84,10 +84,10 @@ For example, our person_pub.h file could be:
 #endif
 ```
 
-As you can see, our person class has four public properties, and one public method.
+As you can see, our person class has four public properties, and two public methods.
 
-The method is actually declared as a function pointer. Note the subtle difference between `(void*) printName(void * eOBJ)` and `void (*printName)(void * eOBJ)`. 
-Here we're declaring that the members `printName` and `printStats`are function pointers, whose return type is `void` and who will accept arguments `void * eOBJ`. 
+The methods are actually declared as a function pointer. Note the subtle difference between `(void*) printName(void * eOBJ)` and `void (*printName)(void * eOBJ)`. 
+Here we're declaring that the members `printName` and `printStats` are function pointers, whose return type is `void` and who will accept arguments `void * eOBJ`. 
 In C, we store a pointer, pointing to a function we'll declare and define in the private class files.
 
 The `[optional private/public typecast]` is used when a _class.h header file is not needed. When? When the class will have no private members. If this were true for our Person class,
@@ -99,7 +99,7 @@ In eOOPc, the argument `void * eOBJ` is used at the first argument of any class 
 
 In other languages, `this` is done behind the scenes, but uses essentially the same logic. 
 
-Note it is required by any `&lt;classname&gt;_t_instatiate()` function for some eOOPC macros to work, and is present in the sole public `printName` method in the Person class.
+Note it is required by any `classname_t_instatiate()` function for some eOOPC macros to work, and is present in the public `printName` and `printStats` methods in the Person class.
 
 ### Private declaration files
 
@@ -113,7 +113,7 @@ Here we can declare a number of things:
 
 In eOOPc style, we layout this code as follows:
 
-```
+```c
 
     #include "classname_pub.h"
     
@@ -137,7 +137,7 @@ an object of type classname_t must be instantiated, then the corresponding metho
 
 Our Person's private declaration file could be:
 
-```
+```c
 #ifndef PERSON_PUBLIC_H
 #define PERSON_PUBLIC_H
 
@@ -203,7 +203,7 @@ It requires access to both to prevent having to redeclare any members or functio
 
 In eOOPc style, we layout this code as follows:
 
-```
+```c
     [optional included headers]
     #include "classname_pub.h"
     #include "classname_class.h"
@@ -230,7 +230,7 @@ In eOOPc style, we layout this code as follows:
 
 So our person source file becomes:
 
-```
+```c
     #include <stdio.h>
     #include <string.h>
     #include "person_pub.h"
@@ -421,7 +421,7 @@ we pass the `self` object to this function, not the `self->vmt` object.
 
 We've already seen the usage of the `eNEW` and `eCONSTRUCT` eOOPc macros. Making an object of type `Person_t` is no different:
 
-```
+```c
 
     //include the public definition
         #include "person_pub.h"
