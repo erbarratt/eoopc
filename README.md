@@ -380,7 +380,7 @@ The first argument is, as ever, `void * eOBJ` to use the `eSELF()` macro with. A
 Note, for the string pointer properties `firstname` and `surname`, we want a COPY of the passed text to reside within the class. This means we need to allocate memory for them, and copy the passed strings into that new memory. This prevents those strings being destroyed at the end
 of whatever scope called this instantiation function.
 
-Doing a simple `self->firstname = firstname` would risk having that pointer point to garbage at some point in the future. By allocating memory,we ensure the survival of the string information for the lifetimeof the object.
+Doing a simple `self->firstname = firstname` would risk having that pointer point to garbage at some point in the future. By allocating memory, we ensure the survival of the string information for the lifetimeof the object.
 
 The final operation is to create and instantiate the vmt sub object. We do this with another eOOPc macro `eNEW()`, defined as:
 
