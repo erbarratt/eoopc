@@ -197,7 +197,7 @@ Note that the private declaration also needs all the members of the public decla
 
 ### Private definition / source file
 
-The private definition file contains the actual logic and source code for all the declared items in both the _pub.h and _pri.h files.
+The private definition file contains the actual logic and source code for all the declared items in both the _pub.h and _class.h files.
 
 It requires access to both to prevent having to redeclare any members or functions.
 
@@ -206,7 +206,7 @@ In eOOPc style, we layout this code as follows:
 ```
     [optional included headers]
     #include "classname_pub.h"
-    #include "classname_pri.h"
+    #include "classname_class.h"
     
     [optional classname_vmt_instantiate() function]
     
@@ -234,7 +234,7 @@ So our person source file becomes:
     #include <stdio.h>
     #include <string.h>
     #include "person_pub.h"
-    #include "person_pri.h"
+    #include "person_class.h"
     
     //VMT
         /**
@@ -347,9 +347,9 @@ So our person source file becomes:
 
 ```
 
-First we include some standard library headers for the below functions, as well as the _pub.h and _pri.h files.
+First we include some standard library headers for the below functions, as well as the _pub.h and _class.h files.
 
-This gives us access to the full blueprint declarations for our class, which is mostly useful for being able to write the source file in the order that the _pri.h file is in.
+This gives us access to the full blueprint declarations for our class, which is mostly useful for being able to write the source file in the order that the _class.h file is in.
 
 #### Person_t_vmt_instantiate()
 
@@ -373,7 +373,7 @@ This is standard practice for using a vmt within a main class. You will more tha
 
 #### Person_t_instantiate()
 
-The `Person_t_intantiate` function is the only `Person_t_` function that has been publically declared, for the obvious reason that any source wishing to instantiate an object of type `Person_t` needs access to it. Hence it's original declaration was in the _pub.h file, not the _pri.h file.
+The `Person_t_intantiate` function is the only `Person_t_` function that has been publically declared, for the obvious reason that any source wishing to instantiate an object of type `Person_t` needs access to it. Hence it's original declaration was in the _pub.h file, not the _class.h file.
 
 The first argument is, as ever, `void * eOBJ` to use the `eSELF()` macro with. After casting back to the `Person_t` type, we can then assign all the public and private properties using the other arguments passed.
 
@@ -403,7 +403,7 @@ In our case, this expands to the function call:
     
 As you can see, we have passed the pointer `self->vmt` of type `Person_t_vmt` to use as the `void * eOBJ` argument in the `Person_t_vmt_instantiate()` function.
 
-Note also, that because the declaration AND definition of the function `Person_t_vmt_instantiate` exists only in the _pri.h and this private class source file, it's not accessible anywehere else.
+Note also, that because the declaration AND definition of the function `Person_t_vmt_instantiate` exists only in the _class.h and this private class source file, it's not accessible anywehere else.
 
 #### Person_t_printName()
 
